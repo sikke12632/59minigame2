@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>우리반 미니게임천국</title>
+  <title>오구반 미니게임천국</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -16,7 +16,7 @@
   <main id="app">
     <section id="loginScreen" class="screen auth-screen">
       <div class="brand-mark">🏫</div>
-      <h1>우리반 미니게임천국</h1>
+      <h1>오구반 미니게임천국</h1>
       <form id="loginForm" class="login-panel">
         <label>
           <span>입장코드</span>
@@ -34,7 +34,7 @@
     <section id="hubScreen" class="screen hub-screen hidden">
       <header class="app-header">
         <div>
-          <p class="eyebrow">우리반 전용 아지트</p>
+          <p class="eyebrow">오구반 전용 아지트</p>
           <h2 id="welcomeTitle">어서 와</h2>
         </div>
         <button id="logoutBtn" class="icon-button" type="button" title="로그아웃">×</button>
@@ -51,7 +51,7 @@
         </article>
         <article>
           <span>티켓</span>
-          <strong id="ticketCount">3</strong>
+          <strong id="ticketCount">10</strong>
         </article>
       </section>
 
@@ -88,8 +88,11 @@
 
       <section class="leaderboard-panel">
         <div class="panel-title">
-          <h3>이번 시즌 랭킹</h3>
-          <button id="refreshRankingBtn" class="text-button" type="button">새로고침</button>
+          <h3>이번 시즌 Top 3</h3>
+          <div class="panel-actions">
+            <button id="fullRankingBtn" class="text-button" type="button">전체 순위</button>
+            <button id="refreshRankingBtn" class="text-button" type="button">새로고침</button>
+          </div>
         </div>
         <ol id="leaderboardList" class="leaderboard-list"></ol>
       </section>
@@ -102,7 +105,7 @@
           <p id="gameKicker" class="eyebrow">Game</p>
           <h2 id="gameTitle">게임</h2>
         </div>
-        <div class="mini-stat">티켓 <strong id="gameTicketCount">3</strong></div>
+        <div class="mini-stat">티켓 <strong id="gameTicketCount">10</strong></div>
       </header>
 
       <div id="difficultyPanel" class="difficulty-panel"></div>
@@ -111,6 +114,13 @@
   </main>
 
   <div id="toast" class="toast hidden" role="status"></div>
+  <div id="rankingModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="rankingModalTitle">
+    <div class="modal-panel">
+      <button id="closeRankingBtn" class="modal-close" type="button" title="닫기">×</button>
+      <h2 id="rankingModalTitle">전체 순위</h2>
+      <ol id="fullRankingList" class="leaderboard-list full-ranking-list"></ol>
+    </div>
+  </div>
   <div id="loadingOverlay" class="loading-overlay hidden">
     <div class="loader"></div>
     <span id="loadingText">불러오는 중</span>

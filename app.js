@@ -3,7 +3,7 @@
     apiUrl: "https://script.google.com/macros/s/AKfycbxwnQIMY-k6bliNRkTUOmC34TUxFt22O4G1_A79vkrhkfcSrEiCAeiF78uBKs-oUS_d/exec",
     localPreviewCode: "ogu2026",
     maxScorePerGame: 1000,
-    maxTickets: 5,
+    maxTickets: 10,
     storagePrefix: "classroom_arcade_v2_"
   };
 
@@ -67,7 +67,7 @@
   const defaultUser = (name) => ({
     name,
     score: 0,
-    tickets: 3,
+    tickets: 10,
     nonoScore: 0,
     pipeScore: 0,
     g2048Score: 0,
@@ -79,7 +79,7 @@
     return {
       name: String(merged.name || fallbackName).trim(),
       score: Number(merged.score) || 0,
-      tickets: Number.isFinite(Number(merged.tickets)) ? Number(merged.tickets) : 3,
+      tickets: Number.isFinite(Number(merged.tickets)) ? Number(merged.tickets) : 10,
       nonoScore: Number(merged.nonoScore) || 0,
       pipeScore: Number(merged.pipeScore) || 0,
       g2048Score: Number(merged.g2048Score) || 0,
@@ -181,7 +181,7 @@
   const renderRanking = () => {
     const list = byId("leaderboardList");
     list.innerHTML = "";
-    const top = state.ranking.slice(0, 12);
+    const top = state.ranking.slice(0, 3);
     if (!top.length) {
       list.innerHTML = `<li><span class="rank-badge">-</span><span class="rank-name">아직 기록이 없습니다</span><span class="rank-score">0</span></li>`;
       return;
@@ -195,6 +195,33 @@
       `;
       list.appendChild(li);
     });
+  };
+
+  const renderFullRanking = () => {
+    const list = byId("fullRankingList");
+    list.innerHTML = "";
+    if (!state.ranking.length) {
+      list.innerHTML = `<li><span class="rank-badge">-</span><span class="rank-name">아직 기록이 없습니다</span><span class="rank-score">0</span></li>`;
+      return;
+    }
+    state.ranking.forEach((row, index) => {
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <span class="rank-badge">${index + 1}</span>
+        <span class="rank-name">${escapeHtml(row.name)}</span>
+        <span class="rank-score">${Number(row.score || 0).toLocaleString()}</span>
+      `;
+      list.appendChild(li);
+    });
+  };
+
+  const openRankingModal = () => {
+    renderFullRanking();
+    byId("rankingModal").classList.remove("hidden");
+  };
+
+  const closeRankingModal = () => {
+    byId("rankingModal").classList.add("hidden");
   };
 
   const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (ch) => ({
@@ -1038,6 +1065,11 @@
         hideLoading();
       }
     });
+    byId("fullRankingBtn").addEventListener("click", openRankingModal);
+    byId("closeRankingBtn").addEventListener("click", closeRankingModal);
+    byId("rankingModal").addEventListener("click", (event) => {
+      if (event.target === byId("rankingModal")) closeRankingModal();
+    });
     $$(".game-card").forEach((button) => button.addEventListener("click", () => openGame(button.dataset.game)));
     document.addEventListener("keydown", (event) => {
       if (!state.activeGame || state.activeGame.type !== "g2048") return;
@@ -1049,7 +1081,7 @@
     });
     const lastName = localStorage.getItem(storageKey("last_name"));
     if (lastName) byId("studentNameInput").value = lastName;
-    if (!CONFIG.apiUrl) byId("loginStatus").textContent = "미리보기 입장코드: seo2class";
+    if (!CONFIG.apiUrl) byId("loginStatus").textContent = "미리보기 입장코드: ogu2026";
   };
 
   init();
