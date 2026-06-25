@@ -1,7 +1,7 @@
 (() => {
   const CONFIG = {
     apiUrl: "https://script.google.com/macros/s/AKfycbxwnQIMY-k6bliNRkTUOmC34TUxFt22O4G1_A79vkrhkfcSrEiCAeiF78uBKs-oUS_d/exec",
-    localPreviewCode: "seo2class",
+    localPreviewCode: "ogu2026",
     maxScorePerGame: 1000,
     maxTickets: 5,
     storagePrefix: "classroom_arcade_v2_"
